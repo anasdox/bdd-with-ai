@@ -17,7 +17,3 @@ This document defines shared terms used throughout the repository. All specs and
 - **Secure by default**: Specify trust boundaries, inputs, and handling rules.
 
 ## Language questions
-- What is the precise definition of “request” in this domain?
-- What inputs are considered valid and who defines them?
-- What outcomes are considered acceptable versus exceptional?
-- What evidence is required to demonstrate completion?

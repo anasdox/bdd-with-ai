@@ -125,9 +125,10 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
 
 ### 13) Decisions and Exceptions
 - Any architectural or policy decision MUST be documented.
-- Decision logs location: `decisions/YYYYMMDD-<CamelCaseName>.md`.
+- Decision logs location (including exceptions/deviations): `decisions/YYYYMMDD-<CamelCaseName>.md`.
 - Required fields: Context, Problem, Options considered, Decision, Consequences, Related hypotheses, Affected features.
-- Any deviation from this file requires a written exception in `LOGS.md` with UoR approval.
+- Any deviation from this file requires a written exception decision record in `decisions/YYYYMMDD-<CamelCaseName>.md` with UoR approval.
+- Optional visibility pointer: add a short entry in `LOGS.md` that links to the exception decision record.
 
 ### 14) CI Enforcement (Required)
 CI MUST enforce:
@@ -179,7 +180,9 @@ For each workshop question, challenge answers until they are specific and observ
 
 ### C) Logging Map
 - Questions and answers: `QUESTIONS_AND_ANSWERS.md`
-- Decisions, outcomes, hypotheses, exceptions: `LOGS.md`
+- Decisions and exceptions (official location): `decisions/YYYYMMDD-<CamelCaseName>.md`
+- Outcomes and hypotheses: `LOGS.md`
+- Optional visibility pointers for exceptions: `LOGS.md`
 - Workshop summaries: `summaries/YYYYMMDD-<CamelCaseName>.md` using `templates/SUMMARY.template.md`
 - Templates: `templates/*.template.md`
 

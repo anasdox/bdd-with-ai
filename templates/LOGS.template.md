@@ -5,19 +5,17 @@
   **Workshop**: 
   **Outcome**: 
 
-## Decisions log
-- **Date**: 
-  **Decision**: 
-  **Rationale**: 
-  **UoR approval**: 
-
 ## Hypotheses log
-- 
+- **Date**:
+  **Hypothesis**:
+  **Validation plan**:
+  **Status**: Open | Confirmed | Rejected
 
-## Exceptions log
+## Visibility pointers (optional)
+- Canonical decisions and exceptions are recorded in `decisions/YYYYMMDD-<CamelCaseName>.md`.
+
+## Exception pointers (optional)
 - **Date**: 
-  **Rule overridden**: 
-  **Scope**: 
-  **Rationale**: 
-  **Mitigation**: 
-  **UoR approval**: 
+  **Exception record**: `decisions/YYYYMMDD-<CamelCaseName>.md`
+  **Rule overridden**:
+  **One-line note**:
