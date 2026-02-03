@@ -120,7 +120,7 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
 ### 12) Branching and Commits
 - One feature per branch: `feature/<feature_name>`.
 - Do not mix features in one branch.
-- Create the feature branch before starting specification work.
+- Create the feature branch as soon as a feature is started, before any feature-scoped changes (`TODO.md`, specs, tests, implementation, or demo notes).
 - Use clear conventional commits after each phase:
   - functional spec done
   - technical spec done
@@ -128,6 +128,7 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
   - implementation done
   - refactoring done
 - Merge only after demo validation.
+- After merge to `main`, close/delete the feature branch.
 
 ### 13) Decisions and Exceptions
 - Any architectural or policy decision MUST be documented.
