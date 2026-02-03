@@ -10,7 +10,7 @@ Thank you for improving this template. Contributions must preserve the repositor
 
 ## How to contribute
 1. Read `AGENTS.md`.
-2. Propose changes via `LOGS.md.md` for anything that changes core behavior or governance.
+2. Propose changes via `LOGS.md` for anything that changes core behavior or governance.
 3. Update or add workshops to keep the template self-verifying.
 4. Run `tools/spec-lint/spec_lint.sh` and `tools/traceability/traceability_check.sh` once specs exist.
 
@@ -23,5 +23,5 @@ Thank you for improving this template. Contributions must preserve the repositor
 
 ## Review expectations
 - Changes must be internally consistent and immediately usable.
-- If a rule is relaxed or tightened, update `LOGS.md.md`.
+- If a rule is relaxed or tightened, update `LOGS.md`.
 - Keep examples stack-neutral and black-box focused.

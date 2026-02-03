@@ -6,16 +6,19 @@ fail=0
 required_files="
 PROBLEM_STATEMENT.md
 UBIQUITOUS_LANGUAGE.md
+GLOBAL_TECHNICAL_ARCHITECTURE.md
 ROADMAP.md
 AGENTS.md
-LOGS.md.md
+LOGS.md
 QUESTIONS_AND_ANSWERS.md
 workshops/README.md
 workshops/PROBLEM_STATEMENT_WORKSHOP.md
 workshops/DESIGN_THINKING_WORKSHOP.md
 workshops/GLOBAL_TECHNICAL_ARCHITECTURE_WORKSHOP.md
 workshops/ROADMAP_WORKSHOP.md
-summaries/template.md
+templates/GLOBAL_TECHNICAL_ARCHITECTURE.template.md
+templates/DECISION.template.md
+templates/SUMMARY.template.md
 "
 
 for file in $required_files; do
@@ -25,14 +28,16 @@ for file in $required_files; do
   fi
 done
 
-if ! grep -q "^## Decisions log" LOGS.md.md; then
-  echo "ERROR: LOGS.md.md must include a '## Decisions log' section." >&2
-  fail=1
-fi
+if [ -s LOGS.md ]; then
+  if ! grep -q "^## Decisions log" LOGS.md; then
+    echo "ERROR: LOGS.md must include a '## Decisions log' section." >&2
+    fail=1
+  fi
 
-if ! awk 'BEGIN{in=0;found=0} /^## Decisions log/{in=1} in && /^- \*\*Date\*\*:/ {found=1} END{exit found?0:1}' LOGS.md.md; then
-  echo "ERROR: LOGS.md.md must include at least one decision entry with a Date." >&2
-  fail=1
+  if ! awk 'BEGIN{in_decisions=0;found=0} /^## Decisions log/{in_decisions=1} in_decisions && /^- \*\*Date\*\*:/ {found=1} END{exit found?0:1}' LOGS.md; then
+    echo "ERROR: LOGS.md must include at least one decision entry with a Date." >&2
+    fail=1
+  fi
 fi
 
 if [ -d specs/functional ]; then

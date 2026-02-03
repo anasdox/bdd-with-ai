@@ -1,4 +1,4 @@
-# Governance Logs
+# Logs
 
 ## Outcomes log
 - **Date**: 

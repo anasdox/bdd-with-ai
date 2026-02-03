@@ -60,7 +60,7 @@ No shortcut is allowed to skip these gates.
 ### 6) Documentation and Contract-Only Exemption
 Some deliverables may be exempt from BDD when they do not represent product behavior (for example OpenAPI docs, developer-facing references, inspection-only developer UIs).
 - Exemptions MUST be explicitly approved by UoR.
-- Exemptions MUST be recorded in `LOGS.md.md` with scope, rationale, and mitigation.
+- Exemptions MUST be recorded in `LOGS.md` with scope, rationale, and mitigation.
 
 ### 7) Functional Specification Rules (WHAT)
 - Location: `specs/functional/*.feature`
@@ -127,7 +127,7 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
 - Any architectural or policy decision MUST be documented.
 - Decision logs location: `decisions/YYYYMMDD-<CamelCaseName>.md`.
 - Required fields: Context, Problem, Options considered, Decision, Consequences, Related hypotheses, Affected features.
-- Any deviation from this file requires a written exception in `LOGS.md.md` with UoR approval.
+- Any deviation from this file requires a written exception in `LOGS.md` with UoR approval.
 
 ### 14) CI Enforcement (Required)
 CI MUST enforce:
@@ -179,7 +179,7 @@ For each workshop question, challenge answers until they are specific and observ
 
 ### C) Logging Map
 - Questions and answers: `QUESTIONS_AND_ANSWERS.md`
-- Decisions, outcomes, hypotheses, exceptions: `LOGS.md.md`
+- Decisions, outcomes, hypotheses, exceptions: `LOGS.md`
 - Workshop summaries: `summaries/YYYYMMDD-<CamelCaseName>.md` using `templates/SUMMARY.template.md`
 - Templates: `templates/*.template.md`
 

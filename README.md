@@ -25,7 +25,8 @@ This repository is a stack-neutral template for behavior-driven development (BDD
 ## Key directories
 - `workshops/`: facilitation playbooks (see `workshops/README.md`)
 - `templates/`: canonical templates for core artifacts
-- `summaries/`: workshop summaries using `summaries/template.md`
+- `summaries/`: workshop summaries using `templates/SUMMARY.template.md`
+- `decisions/`: architecture and policy decision records (`YYYYMMDD-<CamelCaseName>.md`)
 - `tools/`: validation and traceability scripts
 
 ## Validation
