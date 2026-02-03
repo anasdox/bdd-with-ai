@@ -73,11 +73,13 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 ### 8) Technical Specification Rules (HOW)
 - Location: `specs/technical/**`
 - HTTP contracts MUST be specified in OpenAPI.
+- Async contracts MUST be specified in AsyncAPI 
 - Every technical artifact MUST include:
   - `x-tsid: TS-<CamelCaseName>`
   - `x-fsid-links: [FS-...]`
 - TSIDs MUST be unique and map to at least one FSID.
 - Technical specs MUST be user-validated before moving to tests.
+- Technical spec MAY need <CamelCaseName>.md files for (sequence diagrams, flowcharts, DMN , slo)
 
 ### 9) Acceptance Test Rules
 - Location: `tests/acceptance/`
@@ -133,7 +135,7 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
 ### 14) CI Enforcement (Required)
 CI MUST enforce:
 - all Gherkin scenarios contain FSIDs
-- all technical artifacts contain TSIDs and FSID links
+- all technical specifications contain TSIDs and FSID links
 - every FSID is covered by at least one acceptance test
 - traceability matrix is complete
 - all acceptance tests pass
