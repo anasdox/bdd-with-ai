@@ -53,7 +53,8 @@ All behavior work MUST follow this order:
 3. Specifications before code.
 4. Tests before implementation.
 5. Implementation only after validation gates.
-6. Demo and user validation before merge.
+6. Refactoring phase before demo (no behavior change).
+7. Demo and user validation before merge.
 
 No shortcut is allowed to skip these gates.
 
@@ -90,9 +91,7 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 - Tests MUST be user-validated before implementation.
 
 ### 10) Implementation Rules
-- Must comply with `CODE_GUIDE.md`.
-- Use standard library only unless explicitly approved.
-- Explicit dependency injection; no hidden global state.
+- Use standard and commun library only unless explicitly approved.
 - Keep code minimal and readable.
 - Update `TODO.md` continuously.
 
@@ -104,10 +103,14 @@ Mandatory implementation loop:
    - run full tests
    - ensure CI is green
    - update `TODO.md` with `Implementation done` and `CI green`
+5. Run a refactoring phase focused on readability/maintainability without changing validated behavior.
+6. Re-run all acceptance tests in `tests/acceptance`, then run full tests and ensure CI stays green.
 
-It is forbidden to proceed to demo while acceptance tests fail.
+It is forbidden to proceed to demo while acceptance tests fail or refactoring validation is incomplete.
 
 ### 11) Demo and User Validation
+Before demo, the refactoring phase MUST be completed and validated by green acceptance and full test runs.
+
 Each feature MUST end with:
 - an adapted demo environment
 - a short demo note: implemented scope, not implemented scope, limitations
@@ -123,6 +126,7 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
   - technical spec done
   - tests done
   - implementation done
+  - refactoring done
 - Merge only after demo validation.
 
 ### 13) Decisions and Exceptions
@@ -197,9 +201,51 @@ Directory convention when execution starts:
 Traceability expectation:
 - FSID -> TSID -> acceptance tests must be reviewable end-to-end.
 
+
 Validation commands:
 - `tools/spec-lint/spec_lint.sh`
 - `tools/traceability/traceability_check.sh`
+
+### E) Core Development Rules (Essential)
+
+These rules apply to **all languages and all code**.
+
+1. **Single Responsibility**
+   One component = one reason to change.
+
+2. **Simplicity First**
+   Prefer the simplest solution that works.
+   No clever or obscure code.
+
+3. **Readability Over Everything**
+   Code is written for humans first.
+
+4. **Explicit Naming**
+   Names must clearly express intent.
+   If naming is hard, the design is wrong.
+
+5. **Clear Separation of Concerns**
+   Business logic, orchestration, and technical concerns must be isolated.
+
+6. **No Hidden Behavior**
+   Functions must do exactly what they say.
+   No surprising side effects.
+
+7. **Fail Fast, Fail Loud**
+   Validate early.
+   Errors must be explicit and visible.
+
+8. **Test Behavior, Not Implementation**
+   Tests describe what the system does, not how.
+
+9. **Depend on Contracts, Not Details**
+   Rely on interfaces and boundaries, not concrete implementations.
+
+10. **If You Can’t Explain It, Don’t Write It**
+    Code must be easy to explain and reason about.
+
+
+
 
 ### E) Common Mistakes to Avoid
 - Coding before spec validation.
