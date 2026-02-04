@@ -12,11 +12,14 @@ This workshop is a facilitation prompt for humans and AI agents. Questions are g
 - The User of Record is present or has delegated decision authority.
 - Ask one question at a time.
 - For each question, challenge the answer and ask clarifying questions until it is specific and observable.
-- For each question, present multiple choices, include one recommended option, and explain why.
+- For each question in steps 1 to 5, present multiple choices, include one recommended option, and explain why.
 - For each question, collect free-text details (examples, evidence, context).
 - If any precondition is not met, stop and record the blocker in `QUESTIONS_AND_ANSWERS.md`.
 
 ## Interaction Format (mandatory)
+Step 0 exception:
+- Ask a single free-text prompt only (no multiple-choice options).
+
 For every question in sequence steps 1 to 5:
 1. Generate one multiple-choice question based on the latest answers.
 2. Provide 2-3 mutually exclusive options. Mark one as recommended and explain why.
