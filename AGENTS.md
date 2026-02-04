@@ -43,7 +43,7 @@ If any blocking question or hypothesis exists:
 - MUST NOT code.
 - MUST NOT write new specs.
 - MUST ask the user ONE question at a time.
-- MUST offer 2-3 options, include one MVP recommendation, and allow free-text.
+- MUST offer 2-3 options (Multi-select is allowed), include one recommendation, and allow free-text.
 - MUST record answers in `QUESTIONS_AND_ANSWERS.md` and update `TODO.md`.
 
 ### 5) BDD-First Delivery (Non-Negotiable)

@@ -18,7 +18,7 @@ This directory contains facilitation prompts used to produce and update core art
 ## Operating rules
 - Follow the STOP > GUESS rule from `AGENTS.md`.
 - Challenge every answer and ask clarifying questions until it is specific and observable.
-- Provide multiple options and a recommendation for each decision point.
+- Provide multiple options (Multi-select is allowed) and a recommendation for each decision point.
 - Record summaries as files under `summaries/` using `templates/SUMMARY.template.md`.
 - Record decisions, outcomes, hypotheses, and exceptions in `LOGS.md`.
 - Record architectural/policy decisions in `decisions/YYYYMMDD-<CamelCaseName>.md` when applicable (use `templates/DECISION.template.md`).

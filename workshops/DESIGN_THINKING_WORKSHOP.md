@@ -36,7 +36,7 @@ This workshop is a facilitation prompt for humans and AI agents. Questions are g
 ## Interaction Format (mandatory)
 For every question in sequence steps 1 to 5:
 1. Generate one multiple-choice question based on the latest answers.
-2. Provide 2-3 mutually exclusive options. Mark one as recommended and explain why.
+2. Provide 2-3 options (Multi-select is allowed). Mark one as recommended and explain why.
 3. Ask one free-text follow-up to capture context and evidence.
 4. If the answer is vague, ask one clarifying question.
 5. Keep answers observable and specific. Avoid solution design.
