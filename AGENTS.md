@@ -81,7 +81,7 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 - Location: `specs/functional/*.feature`
 - One feature per file.
 - Scenarios describe behavior only (no technical details).
-- Each scenario MUST have `@fsid:FS-<CamelCaseName>`.
+- Each scenario MUST have `@fsid:FS-<ScenarioTitleCamelCase>`.
 - Each feature MUST include explicit non-goals.
 - Functional specs MUST be user-validated before moving to technical specs.
 
@@ -90,7 +90,7 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 - HTTP contracts MUST be specified in OpenAPI.
 - Async contracts MUST be specified in AsyncAPI 
 - Every technical artifact MUST include:
-  - `x-tsid: TS-<CamelCaseName>`
+  - `x-tsid: TS-<TitleCamelCaseTitle>`
   - `x-fsid-links: [FS-...]`
 - TSIDs MUST be unique and map to at least one FSID.
 - Technical specs MUST be user-validated before moving to tests.
@@ -156,9 +156,9 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
 
 ### 14) Decisions and Exceptions
 - Any architectural or policy decision MUST be documented.
-- Decision logs location (including exceptions/deviations): `decisions/YYYYMMDD-<CamelCaseName>.md`.
+- Decision logs location (including exceptions/deviations): `decisions/YYYYMMDD-<DecisionTitleCamelCase>.md`.
 - Required fields: Context, Problem, Options considered, Decision, Consequences, Related hypotheses, Affected features.
-- Any deviation from this file requires a written exception decision record in `decisions/YYYYMMDD-<CamelCaseName>.md` with UoR approval.
+- Any deviation from this file requires a written exception decision record in `decisions/YYYYMMDD-<DecisionTitleCamelCase>.md` with UoR approval.
 - Optional visibility pointer: add a short entry in `LOGS.md` that links to the exception decision record.
 
 ### 15) CI Enforcement (Required)
@@ -205,10 +205,10 @@ Each core document has one purpose:
 
 ### B) Logging Map
 - Questions and answers: `QUESTIONS_AND_ANSWERS.md`
-- Decisions and exceptions (official location): `decisions/YYYYMMDD-<CamelCaseName>.md`
+- Decisions and exceptions (official location): `decisions/YYYYMMDD-<DecisionTitleCamelCase>.md`
 - Outcomes and hypotheses: `LOGS.md`
 - Optional visibility pointers for exceptions: `LOGS.md`
-- Artifact summaries: `summaries/YYYYMMDD-<CamelCaseName>.md` using `templates/SUMMARY.template.md`
+- Artifact summaries: `summaries/YYYYMMDD-<SummaryTitleCamelCase>.md` using `templates/SUMMARY.template.md`
 - Templates: `templates/*.template.md`
 
 ### D) Specification and Traceability Standard
@@ -229,38 +229,28 @@ Validation commands:
 ### E) Core Development Rules (Essential)
 
 These rules apply to **all languages and all code**.
-
 1. **Single Responsibility**
    One component = one reason to change.
-
 2. **Simplicity First**
    Prefer the simplest solution that works.
    No clever or obscure code.
-
 3. **Readability Over Everything**
    Code is written for humans first.
-
 4. **Explicit Naming**
    Names must clearly express intent.
    If naming is hard, the design is wrong.
-
 5. **Clear Separation of Concerns**
    Business logic, orchestration, and technical concerns must be isolated.
-
 6. **No Hidden Behavior**
    Functions must do exactly what they say.
    No surprising side effects.
-
 7. **Fail Fast, Fail Loud**
    Validate early.
    Errors must be explicit and visible.
-
 8. **Test Behavior, Not Implementation**
    Tests describe what the system does, not how.
-
 9. **Depend on Contracts, Not Details**
    Rely on interfaces and boundaries, not concrete implementations.
-
 10. **If You Can’t Explain It, Don’t Write It**
     Code must be easy to explain and reason about.
 
@@ -282,30 +272,32 @@ These rules apply to **all languages and all code**.
 - Challenge vague answers until they are specific and observable
 
 #### PROBLEM_STATEMENT.md
-- [ ] One-sentence: `[Actor] experiences [problem], which causes [observable impact]`
-- [ ] Current flow and failure points are explicit
-- [ ] Success outcomes and non-goals are observable
-- [ ] Scope boundaries (in/out) are explicit
+- One-sentence: `[Actor] experiences [problem], which causes [observable impact]`
+- Current flow and failure points are explicit
+- Success outcomes and non-goals are observable
+- Scope boundaries (in/out) are explicit
 
 #### UBIQUITOUS_LANGUAGE.md
-- [ ] Actors, contexts, and key terms are defined
-- [ ] Prohibited vague terms are listed (fast, easy, robust, etc.)
+- Actors, contexts, and key terms are defined
+- Prohibited vague terms are listed (fast, easy, robust, etc.)
 
 #### GLOBAL_TECHNICAL_ARCHITECTURE.md
-- [ ] System boundaries and external actors are explicit
-- [ ] Key responsibilities and isolation boundaries are mapped
-- [ ] Non-functional expectations (reliability, security) are explicit
-- [ ] Top risks and trade-offs are documented
-
-#### IMPLEMENTATION_PLAN.md
-- [ ] Delivery slices map to roadmap features and traceability artifacts (FSIDs, TSIDs)
-- [ ] Features are sequenced with cross-feature dependencies explicit
-- [ ] Critical path, owners, and blockers are identified
-- [ ] Validation checkpoints are defined
+- System boundaries and external actors are explicit
+- Key responsibilities and isolation boundaries are mapped
+- Non-functional expectations (reliability, security) are explicit
+- Top risks and trade-offs are documented
 
 #### ROADMAP.md
-- [ ] Strategic and tactical features are outcome-oriented and measurable
-- [ ] Risks, dependencies, and non-goals are explicit
-- [ ] Alignment with architecture is confirmed
+- Strategic and tactical features are outcome-oriented and measurable
+- Risks, dependencies, and non-goals are explicit
+- Alignment with architecture is confirmed
+
+#### IMPLEMENTATION_PLAN.md
+- Delivery slices map to roadmap features and traceability artifacts (FSIDs, TSIDs)
+- Features are sequenced with cross-feature dependencies explicit
+- Critical path, owners, and blockers are identified
+- Validation checkpoints are defined
+
+
 
 

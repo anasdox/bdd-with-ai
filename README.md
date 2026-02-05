@@ -13,6 +13,11 @@ This repository is a stack-neutral template for behavior-driven development (BDD
 3. Use templates in `templates/` as the starting point for new artifacts.
 4. Run `tools/spec-lint/spec_lint.sh` and `tools/traceability/traceability_check.sh` once specs exist.
 
+## Template dev mode (exception)
+Template development can bypass the standard AGENTS process gates when explicitly enabled.
+- Activation: `.env` contains `TEMPLATE_DEV_MODE=true`.
+- Scope: bypasses AGENTS process gates for template development work.
+
 ## Core artifacts
 - `PROBLEM_STATEMENT.md`: Defines the immutable problem this project exists to solve.
 - `UBIQUITOUS_LANGUAGE.md`: Captures shared domain terms and meanings used by all contributors.
