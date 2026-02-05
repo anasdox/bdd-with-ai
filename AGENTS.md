@@ -21,16 +21,16 @@ This file defines non-negotiable operating rules for humans and AI agents workin
 Before any new work, agents MUST execute this sequence:
 
 1. Validate required foundation artifacts:
-   - If `PROBLEM_STATEMENT.md` is missing and `SOLUTION.md` exists and UoR explicitly approves the shortcut, agents MAY bootstrap the foundation artifacts from `SOLUTION.md` and skip workshops initially.
+   - If `PROBLEM_STATEMENT.md` is missing and `SOLUTION.md` exists and UoR explicitly approves the shortcut, agents MAY bootstrap the foundation artifacts from `SOLUTION.md` directly.
    - If both `PROBLEM_STATEMENT.md` and `SOLUTION.md` are missing, agents MUST ask the UoR for one free-text solution description, convert it into a draft `SOLUTION.md`, then apply the shortcut flow.
    - Structure-only shortcut requirement: `SOLUTION.md` MUST include sections that map to `PROBLEM_STATEMENT`, `UBIQUITOUS_LANGUAGE`, `GLOBAL_TECHNICAL_ARCHITECTURE`, and `ROADMAP`.
    - Shortcut execution rule: generate/update `PROBLEM_STATEMENT.md`, `UBIQUITOUS_LANGUAGE.md`, `GLOBAL_TECHNICAL_ARCHITECTURE.md`, and `ROADMAP.md` from `SOLUTION.md`.
    - Shortcut refinement rule: ask one question at a time to refine generated artifacts, with a maximum of 10 questions; more questions are allowed only when important blockers remain and the reason is logged in `QUESTIONS_AND_ANSWERS.md`.
-   - If shortcut preconditions are not met (missing structure, no UoR approval, or UoR declines the free-text bootstrap), follow workshop-first flow below.
-   - If `PROBLEM_STATEMENT.md` is missing, run `workshops/PROBLEM_STATEMENT_WORKSHOP.md` first.
-   - If `UBIQUITOUS_LANGUAGE.md` is missing, run `workshops/DESIGN_THINKING_WORKSHOP.md`.
-   - If `GLOBAL_TECHNICAL_ARCHITECTURE.md` is missing, run `workshops/GLOBAL_TECHNICAL_ARCHITECTURE_WORKSHOP.md`.
-   - If `ROADMAP.md` is missing, run `workshops/ROADMAP_WORKSHOP.md`.
+   - If shortcut preconditions are not met (missing structure, no UoR approval, or UoR declines the free-text bootstrap), follow artifact creation flow below.
+   - If `PROBLEM_STATEMENT.md` is missing, create it using the validation checklist in Appendix F.
+   - If `UBIQUITOUS_LANGUAGE.md` is missing, create it using the validation checklist in Appendix F.
+   - If `GLOBAL_TECHNICAL_ARCHITECTURE.md` is missing, create it using the validation checklist in Appendix F.
+   - If `ROADMAP.md` is missing, create it using the validation checklist in Appendix F.
 2. Ensure `TODO.md` exists:
    - If `TODO.md` is missing, agents MUST automatically create it from `templates/TODO.template.md`.
 3. Open `TODO.md` and identify:
@@ -39,7 +39,7 @@ Before any new work, agents MUST execute this sequence:
    - blockers, open questions, and hypotheses
 4. Do not invent work not listed in `TODO.md`.
 5. If execution starts from a validated roadmap and `IMPLEMENTATION_PLAN.md` is missing:
-   - create `IMPLEMENTATION_PLAN.md` from `templates/IMPLEMENTATION_PLAN.template.md` before tests or code.
+   - create `IMPLEMENTATION_PLAN.md` using the validation checklist in Appendix F before tests or code.
 6. After reading `AGENTS.md` and finishing startup-gate checks, agents MUST propose direct next steps in the same response:
    - report current status (ready vs blocked),
    - give the recommended immediate next action,
@@ -203,20 +203,12 @@ Each core document has one purpose:
 - `TODO.md`: operational execution truth.
 - `SOLUTION.md` (optional): shortcut source to bootstrap the four foundation artifacts when UoR approves; it may be synthesized from UoR free-text when both `PROBLEM_STATEMENT.md` and `SOLUTION.md` are missing.
 
-### B) Workshop References
-- `workshops/PROBLEM_STATEMENT_WORKSHOP.md`
-- `workshops/DESIGN_THINKING_WORKSHOP.md`
-- `workshops/GLOBAL_TECHNICAL_ARCHITECTURE_WORKSHOP.md`
-- `workshops/ROADMAP_WORKSHOP.md`
-
-For each workshop question, challenge answers until they are specific and observable.
-
-### C) Logging Map
+### B) Logging Map
 - Questions and answers: `QUESTIONS_AND_ANSWERS.md`
 - Decisions and exceptions (official location): `decisions/YYYYMMDD-<CamelCaseName>.md`
 - Outcomes and hypotheses: `LOGS.md`
 - Optional visibility pointers for exceptions: `LOGS.md`
-- Workshop summaries: `summaries/YYYYMMDD-<CamelCaseName>.md` using `templates/SUMMARY.template.md`
+- Artifact summaries: `summaries/YYYYMMDD-<CamelCaseName>.md` using `templates/SUMMARY.template.md`
 - Templates: `templates/*.template.md`
 
 ### D) Specification and Traceability Standard
@@ -272,9 +264,6 @@ These rules apply to **all languages and all code**.
 10. **If You Can’t Explain It, Don’t Write It**
     Code must be easy to explain and reason about.
 
-
-
-
 ### E) Common Mistakes to Avoid
 - Coding before spec validation.
 - Ignoring specification standards.
@@ -283,3 +272,40 @@ These rules apply to **all languages and all code**.
 - Bundling multiple questions in one blocking interaction.
 - Skipping `TODO.md` updates.
 - Making undocumented decisions.
+
+### F) Foundation Artifact Validation Checklists
+
+**Interaction format for artifact creation:**
+- Ask one question at a time
+- Provide 2-3 options (multi-select allowed) with one recommendation
+- Include a free-text field for details and context
+- Challenge vague answers until they are specific and observable
+
+#### PROBLEM_STATEMENT.md
+- [ ] One-sentence: `[Actor] experiences [problem], which causes [observable impact]`
+- [ ] Current flow and failure points are explicit
+- [ ] Success outcomes and non-goals are observable
+- [ ] Scope boundaries (in/out) are explicit
+
+#### UBIQUITOUS_LANGUAGE.md
+- [ ] Actors, contexts, and key terms are defined
+- [ ] Prohibited vague terms are listed (fast, easy, robust, etc.)
+
+#### GLOBAL_TECHNICAL_ARCHITECTURE.md
+- [ ] System boundaries and external actors are explicit
+- [ ] Key responsibilities and isolation boundaries are mapped
+- [ ] Non-functional expectations (reliability, security) are explicit
+- [ ] Top risks and trade-offs are documented
+
+#### IMPLEMENTATION_PLAN.md
+- [ ] Delivery slices map to roadmap features and traceability artifacts (FSIDs, TSIDs)
+- [ ] Features are sequenced with cross-feature dependencies explicit
+- [ ] Critical path, owners, and blockers are identified
+- [ ] Validation checkpoints are defined
+
+#### ROADMAP.md
+- [ ] Strategic and tactical features are outcome-oriented and measurable
+- [ ] Risks, dependencies, and non-goals are explicit
+- [ ] Alignment with architecture is confirmed
+
+

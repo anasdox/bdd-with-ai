@@ -11,11 +11,6 @@ ROADMAP.md
 AGENTS.md
 LOGS.md
 QUESTIONS_AND_ANSWERS.md
-workshops/README.md
-workshops/PROBLEM_STATEMENT_WORKSHOP.md
-workshops/DESIGN_THINKING_WORKSHOP.md
-workshops/GLOBAL_TECHNICAL_ARCHITECTURE_WORKSHOP.md
-workshops/ROADMAP_WORKSHOP.md
 templates/GLOBAL_TECHNICAL_ARCHITECTURE.template.md
 templates/DECISION.template.md
 templates/SUMMARY.template.md

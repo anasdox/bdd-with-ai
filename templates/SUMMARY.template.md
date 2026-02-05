@@ -1,12 +1,12 @@
-# Workshop Summary Template
+# Artifact Summary Template
 
-Use this template for each workshop summary. Store summaries as files under `summaries/<YYYYMMDD>-<camelCaseName>.md`.
+Use this template for each artifact summary. Store summaries as files under `summaries/<YYYYMMDD>-<camelCaseName>.md`.
 
 ## Date
 YYYY-MM-DD
 
-## Workshop
-workshops/WORKSHOP_NAME.md
+## Artifact
+ARTIFACT_NAME.md (validated against AGENTS.md Appendix F)
 
 ## Scope
 Artifacts or FSIDs impacted

@@ -1,8 +1,8 @@
 # Logs
 
 ## Outcomes log
-- **Date**: 
-  **Workshop**: 
+- **Date**:
+  **Artifact**:
   **Outcome**: 
 
 ## Hypotheses log

@@ -9,7 +9,7 @@ This repository is a stack-neutral template for behavior-driven development (BDD
 
 ## How to use this repository
 1. Read `AGENTS.md` to understand invariant rules and logging expectations.
-2. Run the workshops in `workshops/` to produce the core artifacts in order.
+2. Create foundation artifacts using the validation checklists in `AGENTS.md` (Appendix F).
 3. Use templates in `templates/` as the starting point for new artifacts.
 4. Run `tools/spec-lint/spec_lint.sh` and `tools/traceability/traceability_check.sh` once specs exist.
 
@@ -23,9 +23,8 @@ This repository is a stack-neutral template for behavior-driven development (BDD
 - `LOGS.md`: Stores decisions, exceptions, hypotheses, and governance outcomes.
 
 ## Key directories
-- `workshops/`: facilitation playbooks (see `workshops/README.md`)
 - `templates/`: canonical templates for core artifacts
-- `summaries/`: workshop summaries using `templates/SUMMARY.template.md`
+- `summaries/`: artifact summaries using `templates/SUMMARY.template.md`
 - `decisions/`: architecture and policy decision records (`YYYYMMDD-<CamelCaseName>.md`)
 - `tools/`: validation and traceability scripts
 
