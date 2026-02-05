@@ -216,7 +216,8 @@ Directory convention when execution starts:
 - Functional specs: `specs/functional/*.feature`
 - Technical specs: `specs/technical/`
 - Acceptance tests: `tests/acceptance/`
-- Implementation plan: `IMPLEMENTATION_PLAN.md`
+- Applications source codes: `apps/<app-name>/`
+
 
 Traceability expectation:
 - roadmap feature -> implementation plan slice -> FSID -> TSID -> acceptance tests must be reviewable end-to-end.
@@ -284,6 +285,7 @@ These rules apply to **all languages and all code**.
 #### GLOBAL_TECHNICAL_ARCHITECTURE.md
 - System boundaries and external actors are explicit
 - Key responsibilities and isolation boundaries are mapped
+- Applications architecture and technologies
 - Non-functional expectations (reliability, security) are explicit
 - Top risks and trade-offs are documented
 
@@ -297,7 +299,6 @@ These rules apply to **all languages and all code**.
 - Features are sequenced with cross-feature dependencies explicit
 - Critical path, owners, and blockers are identified
 - Validation checkpoints are defined
-
 
 
 

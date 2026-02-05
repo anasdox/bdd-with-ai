@@ -30,7 +30,8 @@ Template development can bypass the standard AGENTS process gates when explicitl
 ## Key directories
 - `templates/`: canonical templates for core artifacts
 - `summaries/`: artifact summaries using `templates/SUMMARY.template.md`
-- `decisions/`: architecture and policy decision records (`YYYYMMDD-<CamelCaseName>.md`)
+- `decisions/`: architecture and policy decision records (`YYYYMMDD-<DecisionTitleCamelCase>.md`)
+- `apps/`: applications (one per app name)
 - `tools/`: validation and traceability scripts
 
 ## Validation
