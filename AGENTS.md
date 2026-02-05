@@ -21,6 +21,12 @@ This file defines non-negotiable operating rules for humans and AI agents workin
 Before any new work, agents MUST execute this sequence:
 
 1. Validate required foundation artifacts:
+   - If `PROBLEM_STATEMENT.md` is missing and `SOLUTION.md` exists and UoR explicitly approves the shortcut, agents MAY bootstrap the foundation artifacts from `SOLUTION.md` and skip workshops initially.
+   - If both `PROBLEM_STATEMENT.md` and `SOLUTION.md` are missing, agents MUST ask the UoR for one free-text solution description, convert it into a draft `SOLUTION.md`, then apply the shortcut flow.
+   - Structure-only shortcut requirement: `SOLUTION.md` MUST include sections that map to `PROBLEM_STATEMENT`, `UBIQUITOUS_LANGUAGE`, `GLOBAL_TECHNICAL_ARCHITECTURE`, and `ROADMAP`.
+   - Shortcut execution rule: generate/update `PROBLEM_STATEMENT.md`, `UBIQUITOUS_LANGUAGE.md`, `GLOBAL_TECHNICAL_ARCHITECTURE.md`, and `ROADMAP.md` from `SOLUTION.md`.
+   - Shortcut refinement rule: ask one question at a time to refine generated artifacts, with a maximum of 10 questions; more questions are allowed only when important blockers remain and the reason is logged in `QUESTIONS_AND_ANSWERS.md`.
+   - If shortcut preconditions are not met (missing structure, no UoR approval, or UoR declines the free-text bootstrap), follow workshop-first flow below.
    - If `PROBLEM_STATEMENT.md` is missing, run `workshops/PROBLEM_STATEMENT_WORKSHOP.md` first.
    - If `UBIQUITOUS_LANGUAGE.md` is missing, run `workshops/DESIGN_THINKING_WORKSHOP.md`.
    - If `GLOBAL_TECHNICAL_ARCHITECTURE.md` is missing, run `workshops/GLOBAL_TECHNICAL_ARCHITECTURE_WORKSHOP.md`.
@@ -32,6 +38,8 @@ Before any new work, agents MUST execute this sequence:
    - current phase
    - blockers, open questions, and hypotheses
 4. Do not invent work not listed in `TODO.md`.
+5. If execution starts from a validated roadmap and `IMPLEMENTATION_PLAN.md` is missing:
+   - create `IMPLEMENTATION_PLAN.md` from `templates/IMPLEMENTATION_PLAN.template.md` before tests or code.
 
 ### 3) STOP > GUESS Rule
 - If required input is missing or ambiguous, STOP and ask.
@@ -51,10 +59,11 @@ All behavior work MUST follow this order:
 1. Problem understanding first.
 2. Behavior definition before implementation (Gherkin, observable outcomes only).
 3. Specifications before code.
-4. Tests before implementation.
-5. Implementation only after validation gates.
-6. Refactoring phase before demo (no behavior change).
-7. Demo and user validation before merge.
+4. Implementation plan before tests and code.
+5. Tests before implementation.
+6. Implementation only after validation gates.
+7. Refactoring phase before demo (no behavior change).
+8. Demo and user validation before merge.
 
 No shortcut is allowed to skip these gates.
 
@@ -82,7 +91,17 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 - Technical specs MUST be user-validated before moving to tests.
 - Technical spec MAY need <CamelCaseName>.md files for (sequence diagrams, flowcharts, DMN , slo)
 
-### 9) Acceptance Test Rules
+### 9) Implementation Plan Rules (DELIVERY)
+- Roadmap is macro direction; implementation plan is execution-level sequencing.
+- Location: `IMPLEMENTATION_PLAN.md` (single global plan for current execution scope).
+- If `IMPLEMENTATION_PLAN.md` is missing when execution starts, create it from `templates/IMPLEMENTATION_PLAN.template.md`.
+- The plan MUST map delivery slices to roadmap features and traceability artifacts (FSIDs, TSIDs, acceptance tests).
+- The plan MUST sequence features globally and make cross-feature dependencies explicit.
+- The plan MUST identify critical path, owners, blockers, and validation checkpoints.
+- The plan MUST be user-validated before implementation begins.
+- Update `IMPLEMENTATION_PLAN.md` whenever scope, sequence, or blockers change.
+
+### 10) Acceptance Test Rules
 - Location: `tests/acceptance/`
 - One test file per feature.
 - Tests are black-box (for HTTP, use `httptest` + fake downstream servers).
@@ -90,7 +109,7 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 - Each acceptance test MUST reference FSID(s).
 - Tests MUST be user-validated before implementation.
 
-### 10) Implementation Rules
+### 11) Implementation Rules
 - Use standard and commun library only unless explicitly approved.
 - Keep code minimal and readable.
 - Update `TODO.md` continuously.
@@ -108,7 +127,7 @@ Mandatory implementation loop:
 
 It is forbidden to proceed to demo while acceptance tests fail or refactoring validation is incomplete.
 
-### 11) Demo and User Validation
+### 12) Demo and User Validation
 Before demo, the refactoring phase MUST be completed and validated by green acceptance and full test runs.
 
 Each feature MUST end with:
@@ -117,7 +136,7 @@ Each feature MUST end with:
 
 Wait for user validation before merge. Mark the feature done in `TODO.md`.
 
-### 12) Branching and Commits
+### 13) Branching and Commits
 - One feature per branch: `feature/<feature_name>`.
 - Do not mix features in one branch.
 - Create the feature branch as soon as a feature is started, before any feature-scoped changes (`TODO.md`, specs, tests, implementation, or demo notes).
@@ -130,14 +149,14 @@ Wait for user validation before merge. Mark the feature done in `TODO.md`.
 - Merge only after demo validation.
 - After merge to `main`, close/delete the feature branch.
 
-### 13) Decisions and Exceptions
+### 14) Decisions and Exceptions
 - Any architectural or policy decision MUST be documented.
 - Decision logs location (including exceptions/deviations): `decisions/YYYYMMDD-<CamelCaseName>.md`.
 - Required fields: Context, Problem, Options considered, Decision, Consequences, Related hypotheses, Affected features.
 - Any deviation from this file requires a written exception decision record in `decisions/YYYYMMDD-<CamelCaseName>.md` with UoR approval.
 - Optional visibility pointer: add a short entry in `LOGS.md` that links to the exception decision record.
 
-### 14) CI Enforcement (Required)
+### 15) CI Enforcement (Required)
 CI MUST enforce:
 - all Gherkin scenarios contain FSIDs
 - all technical specifications contain TSIDs and FSID links
@@ -147,7 +166,7 @@ CI MUST enforce:
 
 If any check fails, work MUST stop until fixed.
 
-### 15) Quality and Security Principles (Mandatory)
+### 16) Quality and Security Principles (Mandatory)
 - Minimalism: build only what functional specs require.
 - Explicit dependencies: document external dependencies and assumptions.
 - No hidden global state: define shared state boundaries and transitions.
@@ -156,11 +175,11 @@ If any check fails, work MUST stop until fixed.
 - Security hygiene: validate inputs, protect secrets, define trust boundaries.
 - Documentation discipline: keep specs/tests/governance logs synchronized.
 
-### 16) Legacy Quarantine
+### 17) Legacy Quarantine
 - Legacy or non-conforming artifacts MUST be isolated in a clearly labeled folder and excluded from enforcement scripts.
 - Do not modify quarantined content except for risk documentation and migration steps.
 
-### 17) Final Rule
+### 18) Final Rule
 If you do not know what to do next:
 1. Open `TODO.md`.
 2. Re-read `AGENTS.md`.
@@ -174,8 +193,10 @@ Each core document has one purpose:
 - `UBIQUITOUS_LANGUAGE.md`: shared domain vocabulary.
 - `AGENTS.md`: operating rules.
 - `GLOBAL_TECHNICAL_ARCHITECTURE.md`: architecture boundaries.
-- `ROADMAP.md`: strategic direction.
+- `ROADMAP.md`: macro strategic direction.
+- `IMPLEMENTATION_PLAN.md`: global execution plan (cross-feature sequence, dependencies, validation checkpoints).
 - `TODO.md`: operational execution truth.
+- `SOLUTION.md` (optional): shortcut source to bootstrap the four foundation artifacts when UoR approves; it may be synthesized from UoR free-text when both `PROBLEM_STATEMENT.md` and `SOLUTION.md` are missing.
 
 ### B) Workshop References
 - `workshops/PROBLEM_STATEMENT_WORKSHOP.md`
@@ -198,9 +219,10 @@ Directory convention when execution starts:
 - Functional specs: `specs/functional/*.feature`
 - Technical specs: `specs/technical/`
 - Acceptance tests: `tests/acceptance/`
+- Implementation plan: `IMPLEMENTATION_PLAN.md`
 
 Traceability expectation:
-- FSID -> TSID -> acceptance tests must be reviewable end-to-end.
+- roadmap feature -> implementation plan slice -> FSID -> TSID -> acceptance tests must be reviewable end-to-end.
 
 
 Validation commands:
