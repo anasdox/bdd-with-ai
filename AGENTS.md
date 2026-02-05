@@ -40,6 +40,11 @@ Before any new work, agents MUST execute this sequence:
 4. Do not invent work not listed in `TODO.md`.
 5. If execution starts from a validated roadmap and `IMPLEMENTATION_PLAN.md` is missing:
    - create `IMPLEMENTATION_PLAN.md` from `templates/IMPLEMENTATION_PLAN.template.md` before tests or code.
+6. After reading `AGENTS.md` and finishing startup-gate checks, agents MUST propose direct next steps in the same response:
+   - report current status (ready vs blocked),
+   - give the recommended immediate next action,
+   - when a decision is needed, present 2-3 options with one recommendation.
+   - if a blocker exists, ask exactly one blocking question first (per Rule 4), then state the immediate next step after that answer.
 
 ### 3) STOP > GUESS Rule
 - If required input is missing or ambiguous, STOP and ask.
