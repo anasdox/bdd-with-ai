@@ -90,11 +90,11 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 - HTTP contracts MUST be specified in OpenAPI.
 - Async contracts MUST be specified in AsyncAPI 
 - Every technical artifact MUST include:
-  - `x-tsid: TS-<TitleCamelCaseTitle>`
+  - `x-tsid: TS-<TitleCamelCase>`
   - `x-fsid-links: [FS-...]`
 - TSIDs MUST be unique and map to at least one FSID.
 - Technical specs MUST be user-validated before moving to tests.
-- Technical spec MAY need <CamelCaseName>.md files for (sequence diagrams, flowcharts, DMN , slo)
+- Technical spec MAY need `<TitleCamelCase>.md` files for (sequence diagrams, flowcharts, DMN , slo)
 
 ### 9) Implementation Plan Rules (DELIVERY)
 - Roadmap is macro direction; implementation plan is execution-level sequencing.
@@ -199,7 +199,7 @@ Each core document has one purpose:
 - `AGENTS.md`: operating rules.
 - `GLOBAL_TECHNICAL_ARCHITECTURE.md`: architecture boundaries.
 - `ROADMAP.md`: macro strategic direction.
-- `IMPLEMENTATION_PLAN.md`: global execution plan (cross-feature sequence, dependencies, validation checkpoints).
+- `IMPLEMENTATION_PLAN.md`: **global** execution plan (cross-feature sequence, dependencies, validation checkpoints).
 - `TODO.md`: operational execution truth.
 - `SOLUTION.md` (optional): shortcut source to bootstrap the four foundation artifacts when UoR approves; it may be synthesized from UoR free-text when both `PROBLEM_STATEMENT.md` and `SOLUTION.md` are missing.
 
