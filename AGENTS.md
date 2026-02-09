@@ -6,6 +6,22 @@ This file defines non-negotiable operating rules for humans and AI agents workin
 - The UoR is the accountable decision-maker for scope, intent, and acceptance.
 - Current UoR: Repository Maintainer Council.
 
+## Operating Modes
+
+The repository operates in one of three mutually exclusive modes, controlled by the `AGENTS_MODE` variable in `.env`.
+
+| Value | Purpose | When to use |
+|-------|---------|-------------|
+| `standard` | Full BDD-First delivery, all gates enforced | Default. Normal feature development. Used when all foundation artifacts are validated and conformant. |
+| `reverse_engineering` | Onboarding existing code into conformance | When `apps/` contains working source code but foundation artifacts, specs, or tests are missing. |
+| `ungated` | Template and process development | When modifying AGENTS.md, templates, or tooling. Bypasses AGENTS process gates. |
+
+**Rules:**
+- If `AGENTS_MODE` is absent or empty, the mode is `standard`.
+- Only one mode is active at a time.
+- Mode changes require UoR approval and MUST be logged in `LOGS.md` with: previous mode, new mode, reason.
+- When the objective of a non-standard mode is achieved, the UoR sets `AGENTS_MODE=standard`.
+
 ## Core Rules
 
 ### 1) Authority and Conflict Resolution
@@ -20,31 +36,87 @@ This file defines non-negotiable operating rules for humans and AI agents workin
 ### 2) Startup Gate (Mandatory Sequence)
 Before any new work, agents MUST execute this sequence:
 
-1. Validate required foundation artifacts:
-   - If `PROBLEM_STATEMENT.md` is missing and `SOLUTION.md` exists and UoR explicitly approves the shortcut, agents MAY bootstrap the foundation artifacts from `SOLUTION.md` directly.
-   - If both `PROBLEM_STATEMENT.md` and `SOLUTION.md` are missing, agents MUST ask the UoR for one free-text solution description, convert it into a draft `SOLUTION.md`, then apply the shortcut flow.
-   - Structure-only shortcut requirement: `SOLUTION.md` MUST include sections that map to `PROBLEM_STATEMENT`, `UBIQUITOUS_LANGUAGE`, `GLOBAL_TECHNICAL_ARCHITECTURE`, and `ROADMAP`.
-   - Shortcut execution rule: generate/update `PROBLEM_STATEMENT.md`, `UBIQUITOUS_LANGUAGE.md`, `GLOBAL_TECHNICAL_ARCHITECTURE.md`, and `ROADMAP.md` from `SOLUTION.md`.
-   - Shortcut refinement rule: ask one question at a time to refine generated artifacts, with a maximum of 10 questions; more questions are allowed only when important blockers remain and the reason is logged in `QUESTIONS_AND_ANSWERS.md`.
-   - If shortcut preconditions are not met (missing structure, no UoR approval, or UoR declines the free-text bootstrap), follow artifact creation flow below.
-   - If `PROBLEM_STATEMENT.md` is missing, create it using the validation checklist in Appendix F.
-   - If `UBIQUITOUS_LANGUAGE.md` is missing, create it using the validation checklist in Appendix F.
-   - If `GLOBAL_TECHNICAL_ARCHITECTURE.md` is missing, create it using the validation checklist in Appendix F.
-   - If `ROADMAP.md` is missing, create it using the validation checklist in Appendix F.
-2. Ensure `TODO.md` exists:
+1. Read `AGENTS_MODE` from `.env` and apply the corresponding operating mode.
+2. Validate required foundation artifacts (`PROBLEM_STATEMENT.md`, `UBIQUITOUS_LANGUAGE.md`, `GLOBAL_TECHNICAL_ARCHITECTURE.md`, `ROADMAP.md`):
+   - If all four exist and are validated, proceed to step 3.
+   - If any are missing, detect the bootstrap source based on active mode:
+     a. **`reverse_engineering` mode** — `apps/` contains application source code → execute the Reverse Engineering Onboarding (Rule 2b). All foundation artifacts, specs, and tests are generated from existing code.
+     b. **`SOLUTION.md` exists** — UoR explicitly approves → bootstrap foundation artifacts from it. `SOLUTION.md` MUST include sections that map to `PROBLEM_STATEMENT`, `UBIQUITOUS_LANGUAGE`, `GLOBAL_TECHNICAL_ARCHITECTURE`, and `ROADMAP`.
+     c. **UoR free-text** — Neither existing code (in reverse engineering mode) nor `SOLUTION.md` is available → ask the UoR for one free-text solution description, convert it into a draft `SOLUTION.md`, then apply the document bootstrap (b).
+     d. **Manual creation** — If UoR declines all bootstrap paths, create each missing artifact individually using the validation checklists in Appendix F.
+   - Bootstrap refinement rule: ask one question at a time to refine generated artifacts, with a maximum of 10 questions; more questions are allowed only when important blockers remain and the reason is logged in `QUESTIONS_AND_ANSWERS.md`.
+   - Bootstrap execution rule: generate/update `PROBLEM_STATEMENT.md`, `UBIQUITOUS_LANGUAGE.md`, `GLOBAL_TECHNICAL_ARCHITECTURE.md`, and `ROADMAP.md` from the selected source.
+   - All generated artifacts MUST be validated by UoR before proceeding.
+3. Ensure `TODO.md` exists:
    - If `TODO.md` is missing, agents MUST automatically create it from `templates/TODO.template.md`.
-3. Open `TODO.md` and identify:
+4. Open `TODO.md` and identify:
    - active feature
    - current phase
    - blockers, open questions, and hypotheses
-4. Do not invent work not listed in `TODO.md`.
-5. If execution starts from a validated roadmap and `IMPLEMENTATION_PLAN.md` is missing:
+5. Do not invent work not listed in `TODO.md`.
+6. If execution starts from a validated roadmap and `IMPLEMENTATION_PLAN.md` is missing:
    - create `IMPLEMENTATION_PLAN.md` using the validation checklist in Appendix F before tests or code.
-6. After reading `AGENTS.md` and finishing startup-gate checks, agents MUST propose direct next steps in the same response:
+7. After reading `AGENTS.md` and finishing startup-gate checks, agents MUST propose direct next steps in the same response:
    - report current status (ready vs blocked),
    - give the recommended immediate next action,
    - when a decision is needed, present 2-3 options with one recommendation.
    - if a blocker exists, ask exactly one blocking question first (per Rule 4), then state the immediate next step after that answer.
+
+### 2b) Reverse Engineering Onboarding
+When `AGENTS_MODE=reverse_engineering` and `apps/` contains existing application source code, agents MUST follow this phased onboarding process to bring the codebase into conformance. Each phase requires UoR validation before proceeding to the next.
+
+**Preconditions:**
+- `AGENTS_MODE=reverse_engineering` is set in `.env`.
+- `apps/` contains one or more application directories with source code.
+- One or more foundation artifacts, specs, or tests are missing.
+- UoR has approved the reverse engineering onboarding.
+
+**Phase 1: Code Analysis**
+1. Read all source code in `apps/` systematically: entry points, routes/endpoints, models/types, components, configuration, dependencies.
+2. Identify: domain entities, API contracts, data models, UI flows, external dependencies, technology stack, communication patterns (HTTP, SSE, WebSocket, etc.).
+3. Present a structured analysis summary to UoR per application: "Here is what the code does. Is this accurate?"
+4. UoR validates or corrects the analysis before proceeding.
+
+**Phase 2: Foundation Artifact Generation**
+Generate each missing foundation artifact from the validated code analysis:
+1. `PROBLEM_STATEMENT.md` — Extract the problem the software solves from its observable behavior. Use Appendix F checklist.
+2. `UBIQUITOUS_LANGUAGE.md` — Extract domain terms, actors, and contexts from code (entity names, type definitions, API naming, UI labels). Use Appendix F checklist.
+3. `GLOBAL_TECHNICAL_ARCHITECTURE.md` — Document the actual architecture: stack, boundaries, communication patterns, storage, deployment. Use Appendix F checklist.
+4. `ROADMAP.md` — List already-delivered features as completed milestones. Identify observed gaps, bugs, and potential improvements as future milestones. Use Appendix F checklist.
+- Each artifact MUST be validated by UoR before proceeding to Phase 3.
+
+**Phase 3: Functional Specification Extraction**
+1. For each identified feature/behavior in the existing code, write a functional specification in `specs/functional/*.feature`.
+2. Each scenario MUST have `@fsid:FS-<ScenarioTitleCamelCase>`.
+3. Specs describe observed behavior only (what the code actually does, not aspirational behavior).
+4. Tag any behavior the UoR identifies as a bug or unintended: `@status:bug` or `@status:unintended`.
+5. Each feature MUST include explicit non-goals.
+6. UoR validates each functional spec before proceeding.
+
+**Phase 4: Technical Specification Extraction**
+1. For each functional spec, extract technical specifications from the code.
+2. HTTP contracts → OpenAPI in `specs/technical/`.
+3. Async contracts (SSE, WebSocket) → AsyncAPI in `specs/technical/`.
+4. Every technical artifact MUST include `x-tsid: TS-<TitleCamelCase>` and `x-fsid-links: [FS-...]`.
+5. UoR validates technical specs before proceeding.
+
+**Phase 5: Acceptance Test Generation**
+1. For each functional spec, write acceptance tests in `tests/acceptance/`.
+2. Tests MUST pass against the existing code as-is (they document current behavior).
+3. If a test fails against existing code, this indicates a spec/code mismatch — resolve with UoR:
+   - Option A: Fix the spec to match actual code behavior.
+   - Option B: Mark as known bug in specs (`@status:bug`) and create a TODO entry for future fix.
+4. Each acceptance test MUST reference FSID(s).
+
+**Phase 6: Conformance Validation**
+1. Run `tools/spec-lint/spec_lint.sh` and `tools/traceability/traceability_check.sh`.
+2. All enforcement gates MUST pass.
+3. UoR performs final validation of the complete artifact set.
+4. Record the onboarding completion in `LOGS.md` with: application name, date, artifact summary.
+5. Update `TODO.md` to reflect conformance status.
+6. UoR sets `AGENTS_MODE=standard` in `.env`.
+
+**After onboarding is complete**, the project operates under the standard forward flow (Rule 5: BDD-First) for all new work. The reverse engineering onboarding is a one-time process per existing application.
 
 ### 3) STOP > GUESS Rule
 - If required input is missing or ambiguous, STOP and ask.
@@ -194,6 +266,7 @@ If you do not know what to do next:
 
 ### A) Repository Mental Model
 Each core document has one purpose:
+- `.env` (`AGENTS_MODE`): active operating mode (`standard`, `reverse_engineering`, `ungated`).
 - `PROBLEM_STATEMENT.md`: immutable project intent.
 - `UBIQUITOUS_LANGUAGE.md`: shared domain vocabulary.
 - `AGENTS.md`: operating rules.
@@ -201,7 +274,7 @@ Each core document has one purpose:
 - `ROADMAP.md`: macro strategic direction.
 - `IMPLEMENTATION_PLAN.md`: **global** execution plan (cross-feature sequence, dependencies, validation checkpoints).
 - `TODO.md`: operational execution truth.
-- `SOLUTION.md` (optional): shortcut source to bootstrap the four foundation artifacts when UoR approves; it may be synthesized from UoR free-text when both `PROBLEM_STATEMENT.md` and `SOLUTION.md` are missing.
+- `SOLUTION.md` (optional): bootstrap source for the four foundation artifacts when UoR approves; used when no existing code is available.
 
 ### B) Logging Map
 - Questions and answers: `QUESTIONS_AND_ANSWERS.md`
@@ -300,5 +373,46 @@ These rules apply to **all languages and all code**.
 - Critical path, owners, and blockers are identified
 - Validation checkpoints are defined
 
+### G) Reverse Engineering Onboarding Checklist
 
+Use this checklist to track progress through the onboarding phases (Rule 2b).
+
+#### Phase 1: Code Analysis
+- [ ] All applications in `apps/` have been systematically read
+- [ ] Domain entities, API contracts, data models identified
+- [ ] Technology stack and external dependencies documented
+- [ ] Communication patterns (HTTP, SSE, WebSocket) identified
+- [ ] Analysis summary presented to and validated by UoR
+
+#### Phase 2: Foundation Artifacts
+- [ ] `PROBLEM_STATEMENT.md` generated and validated by UoR
+- [ ] `UBIQUITOUS_LANGUAGE.md` generated with domain terms from code and validated by UoR
+- [ ] `GLOBAL_TECHNICAL_ARCHITECTURE.md` generated from actual stack and validated by UoR
+- [ ] `ROADMAP.md` generated with delivered features + identified gaps and validated by UoR
+
+#### Phase 3: Functional Specifications
+- [ ] One `.feature` file per identified behavior in `specs/functional/`
+- [ ] All scenarios have `@fsid:FS-<ScenarioTitleCamelCase>`
+- [ ] Bug/unintended behaviors tagged `@status:bug` or `@status:unintended`
+- [ ] Non-goals explicit in each feature
+- [ ] All functional specs validated by UoR
+
+#### Phase 4: Technical Specifications
+- [ ] HTTP contracts in OpenAPI format in `specs/technical/`
+- [ ] Async contracts in AsyncAPI format in `specs/technical/`
+- [ ] All artifacts have `x-tsid` and `x-fsid-links`
+- [ ] All technical specs validated by UoR
+
+#### Phase 5: Acceptance Tests
+- [ ] One test file per feature in `tests/acceptance/`
+- [ ] All tests reference FSID(s)
+- [ ] All tests pass against existing code
+- [ ] Spec/code mismatches resolved with UoR
+
+#### Phase 6: Conformance Validation
+- [ ] `tools/spec-lint/spec_lint.sh` passes
+- [ ] `tools/traceability/traceability_check.sh` passes
+- [ ] Onboarding completion recorded in `LOGS.md`
+- [ ] `TODO.md` updated with conformance status
+- [ ] `AGENTS_MODE=standard` set in `.env`
 
