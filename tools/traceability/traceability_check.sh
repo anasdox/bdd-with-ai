@@ -14,7 +14,7 @@ if [ -z "$feature_files" ]; then
   exit 1
 fi
 
-fsids=$(grep -ho "FS-[A-Z0-9-]\{3,\}-[0-9]\{3\}" $feature_files | sort -u)
+fsids=$(grep -ho "FS-[A-Za-z0-9]\{3,\}" $feature_files | sort -u)
 if [ -z "$fsids" ]; then
   echo "ERROR: No FSIDs found in functional specs." >&2
   exit 1

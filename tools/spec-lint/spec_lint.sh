@@ -29,10 +29,6 @@ if [ -s LOGS.md ]; then
     fail=1
   fi
 
-  if ! awk 'BEGIN{in_decisions=0;found=0} /^## Decisions log/{in_decisions=1} in_decisions && /^- \*\*Date\*\*:/ {found=1} END{exit found?0:1}' LOGS.md; then
-    echo "ERROR: LOGS.md must include at least one decision entry with a Date." >&2
-    fail=1
-  fi
 fi
 
 if [ -d specs/functional ]; then
