@@ -8,7 +8,7 @@ This tool validates baseline documents and, when execution begins, verifies spec
 - Required templates exist (including `templates/GLOBAL_TECHNICAL_ARCHITECTURE.template.md`, `templates/DECISION.template.md`, and `templates/SUMMARY.template.md`).
 - If `specs/functional/` exists, each `.feature` scenario includes `@fsid:FS-...`.
 - If `specs/technical/` exists, technical specs exist and OpenAPI operations include `x-tsid` and `x-fsid-links`.
-- If `tests/acceptance/` exists, at least one acceptance test file exists.
+- If `tests/` exists, at least one acceptance test file exists.
 
 ## Usage
 Run:

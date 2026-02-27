@@ -101,7 +101,7 @@ Generate each missing foundation artifact from the validated code analysis:
 5. UoR validates technical specs before proceeding.
 
 **Phase 5: Acceptance Test Generation**
-1. For each functional spec, write acceptance tests in `tests/acceptance/`.
+1. For each functional spec, write acceptance tests in `tests/`.
 2. Tests MUST pass against the existing code as-is (they document current behavior).
 3. If a test fails against existing code, this indicates a spec/code mismatch — resolve with UoR:
    - Option A: Fix the spec to match actual code behavior.
@@ -179,7 +179,7 @@ Some deliverables may be exempt from BDD when they do not represent product beha
 - Update `IMPLEMENTATION_PLAN.md` whenever scope, sequence, or blockers change.
 
 ### 10) Acceptance Test Rules
-- Location: `tests/acceptance/`
+- Location: `tests/`
 - One test file per feature.
 - Tests are black-box (for HTTP, use `httptest` + fake downstream servers).
 - Gherkin is not executable (no step binding).
@@ -288,7 +288,7 @@ Each core document has one purpose:
 Directory convention when execution starts:
 - Functional specs: `specs/functional/*.feature`
 - Technical specs: `specs/technical/`
-- Acceptance tests: `tests/acceptance/`
+- Acceptance tests: `tests/`
 - Applications source codes: `apps/<app-name>/`
 
 
@@ -404,7 +404,7 @@ Use this checklist to track progress through the onboarding phases (Rule 2b).
 - [ ] All technical specs validated by UoR
 
 #### Phase 5: Acceptance Tests
-- [ ] One test file per feature in `tests/acceptance/`
+- [ ] One test file per feature in `tests/`
 - [ ] All tests reference FSID(s)
 - [ ] All tests pass against existing code
 - [ ] Spec/code mismatches resolved with UoR

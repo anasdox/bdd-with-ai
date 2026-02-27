@@ -83,7 +83,7 @@ All behavior work follows this strict order (no shortcuts):
 3. Functional specifications (`specs/functional/*.feature`)
 4. Technical specifications (`specs/technical/`)
 5. Implementation plan (`IMPLEMENTATION_PLAN.md`)
-6. Acceptance tests (`tests/acceptance/`)
+6. Acceptance tests (`tests/`)
 7. Implementation (`apps/<app-name>/`)
 8. Refactoring (no behavior change)
 9. Demo and user validation

@@ -3,6 +3,47 @@ set -eu
 
 report="traceability-report.md"
 
+has_executable_fsid_reference() {
+  file="$1"
+  fsid="$2"
+
+  awk -v fsid="$fsid" '
+    BEGIN {
+      marker = "@fsid:" fsid
+      in_block = 0
+      found_marker = 0
+      has_executable = 0
+    }
+
+    index($0, marker) > 0 {
+      in_block = 1
+      found_marker = 1
+      next
+    }
+
+    /@fsid:FS-[A-Za-z0-9]+/ {
+      if (in_block) {
+        in_block = 0
+      }
+    }
+
+    in_block {
+      if ($0 ~ /(^|[^[:alnum:]_])(it|test)[[:space:]]*\(/) {
+        has_executable = 1
+      }
+      if ($0 ~ /(^|[^[:alnum:]_])(it|test)\.only[[:space:]]*\(/) {
+        has_executable = 1
+      }
+    }
+
+    END {
+      if (found_marker && has_executable) exit 0
+      if (found_marker) exit 1
+      exit 2
+    }
+  ' "$file"
+}
+
 if [ ! -d specs/functional ]; then
   echo "traceability_check: OK (no specs/functional directory; template state)"
   exit 0
@@ -20,7 +61,7 @@ if [ -z "$fsids" ]; then
   exit 1
 fi
 
-search_dirs="tests/acceptance"
+search_dirs="tests"
 missing=0
 
 {
@@ -33,18 +74,52 @@ missing=0
 
   for fsid in $fsids; do
     refs=$(grep -rl "$fsid" $search_dirs 2>/dev/null || true)
-    if [ -n "$refs" ]; then
-      ref_list=$(echo "$refs" | tr '\n' ',' | sed 's/, $//; s/,$//')
-      echo "| $fsid | $ref_list | OK |"
-    else
+    if [ -z "$refs" ]; then
       echo "| $fsid | none | MISSING |"
+      missing=1
+      continue
+    fi
+
+    executable_refs=""
+    todo_only_refs=""
+    header_only_refs=""
+
+    for ref in $refs; do
+      if has_executable_fsid_reference "$ref" "$fsid"; then
+        executable_refs="${executable_refs}${executable_refs:+,}$ref"
+      else
+        case "$?" in
+          1)
+            todo_only_refs="${todo_only_refs}${todo_only_refs:+,}$ref"
+            ;;
+          2)
+            header_only_refs="${header_only_refs}${header_only_refs:+,}$ref"
+            ;;
+          *)
+            header_only_refs="${header_only_refs}${header_only_refs:+,}$ref"
+            ;;
+        esac
+      fi
+    done
+
+    if [ -n "$executable_refs" ]; then
+      echo "| $fsid | $executable_refs | OK |"
+    else
+      combined_refs="${todo_only_refs}${todo_only_refs:+${header_only_refs:+,}}${header_only_refs}"
+      if [ -n "$todo_only_refs" ] && [ -z "$header_only_refs" ]; then
+        echo "| $fsid | $combined_refs | TODO_ONLY (no executable test) |"
+      elif [ -n "$combined_refs" ]; then
+        echo "| $fsid | $combined_refs | REFERENCED_ONLY (no executable @fsid block) |"
+      else
+        echo "| $fsid | none | MISSING |"
+      fi
       missing=1
     fi
   done
 } > "$report"
 
 if [ "$missing" -ne 0 ]; then
-  echo "ERROR: Some FSIDs are missing in acceptance tests. See $report." >&2
+  echo "ERROR: Some FSIDs are not covered by executable acceptance tests. See $report." >&2
   exit 1
 fi
 
