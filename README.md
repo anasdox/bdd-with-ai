@@ -10,6 +10,22 @@ A stack-neutral template for behavior-driven development (BDD) and agent-friendl
 
 ## Quickstart
 
+### 0. Set up your project
+
+```bash
+# Clone this template repository
+git clone https://github.com/anas-music/bdd-with-ai.git
+
+# Copy the template content into your project repository (excluding .git)
+cp -r bdd-with-ai/* /path/to/your-project/
+cp bdd-with-ai/.env.example /path/to/your-project/
+
+# Navigate to your project
+cd /path/to/your-project
+```
+
+Then start your AI coding agent (Claude Code, or any alternative) and say: **"what next"** — the agent will read `AGENTS.md`, check the operating mode, and guide you through the startup gate.
+
 ### 1. Clone and configure the operating mode
 
 ```bash
